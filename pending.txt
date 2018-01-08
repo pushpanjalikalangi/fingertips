@@ -1,0 +1,19 @@
+Doubts:
+
+1. Password encrypting
+2. Authentication
+3. Login and Registration
+4. Auto increment in polling i.e pollId
+
+Done:
+
+1. createPoll
+
+Pending:
+
+1. submitPoll
+
+
+Regarding new Api:
+1.Delete the poll
+2.4 options in poll creating but in polls displaying only 3 options available
