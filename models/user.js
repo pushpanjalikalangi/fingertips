@@ -24,6 +24,9 @@ var userSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  poll: {
+    type: Array
+  }
   // role: {
   //   type: String,
   //   required: [true, 'User Role is Required'],

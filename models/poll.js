@@ -19,18 +19,25 @@ var pollSchema = mongoose.Schema({
       return new Date();
     }
   },
+  options1: {
+    type: String,
+    trim: true
+  },
+  options2: {
+    type: String,
+    trim: true
+  },
+  options3: {
+    type: String,
+    trim: true
+  },
+  options4: {
+    type: String,
+    trim: true
+  },
   createdBy: {
     type: String,
     required: true
-  },
-  comments: {
-    type: Array
-  },
-  Accept: {
-    type: Boolean
-  },
-  Reject: {
-    type: Boolean
   }
 });
 module.exports = mongoose.model('poll', pollSchema);
