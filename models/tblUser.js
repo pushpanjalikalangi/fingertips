@@ -24,13 +24,11 @@ var userSchema = mongoose.Schema({
   },
   MobileNumber: {
     type: String,
-    required: [true, 'MobileNumber is Required'],
-    unique: [true, 'MobileNumber must be unique']
+    required: [true, 'MobileNumber is Required']
   },
   EmailId: {
     type: String,
-    required: [true, 'EmailId is Required'],
-    unique: [true, 'EmailId must be unique']
+    required: [true, 'EmailId is Required']
   },
   IsActive: {
     type: Boolean,
