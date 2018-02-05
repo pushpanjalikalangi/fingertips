@@ -33,8 +33,8 @@ exports.caseAccept = (req, res) => {
             var CaseAcceptedId = id + 1;
           }
           var caseAccept = new CaseAcceptance({
-            _id: caseAcceptance.CaseAcceptedId,
-            CaseAcceptedId: caseAcceptance.CaseAcceptedId,
+            _id: CaseAcceptedId,
+            CaseAcceptedId: CaseAcceptedId,
             CaseTransactionId: caseAcceptance.CaseTransactionId,
             UserId: caseAcceptance.UserId
           });
@@ -71,7 +71,6 @@ exports.caseResolve = (req, res) => {
         StatusId: 3
       }
     }).exec((err, Case) => {
-      console.log(Case);
       if (err) {
         res.status(403).send({
           sucess: false,
