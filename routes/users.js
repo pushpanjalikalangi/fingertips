@@ -209,9 +209,12 @@ exports.signUp = (req, res) => {
             "EmailId": users.EmailId
           });
           newUser.save(function(err) {
-            if (err)
-              throw err;
-            else {
+            if (err) {
+              res.status(403).send({
+                sucess: false,
+                Error: err
+              });
+            } else {
               global.jwtToken = jwt.sign({
                 'password': users.password
               }, config.jwtsecret, {

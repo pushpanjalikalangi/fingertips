@@ -90,3 +90,33 @@ exports.caseResolve = (req, res) => {
     });
   }
 }
+exports.staffHome = (req, res) => {
+  try {
+    Casetransaction.find({
+      StatusId: 1
+    }).exec((err, result) => {
+      if (err) {
+        res.status(403).send({
+          sucess: false,
+          message: 'Error in fetching the details',
+          Error: err
+        });
+      } else if (result.length == 0) {
+        res.status(200).send({
+          sucess: false,
+          message: 'No Active Cases are Present',
+        });
+      } else {
+        res.status(200).send({
+          sucess: true,
+          cases: result
+        })
+      }
+    })
+  } catch (e) {
+    res.status(400).send({
+      sucess: false,
+      message: 'Internal server'
+    });
+  }
+}
