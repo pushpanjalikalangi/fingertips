@@ -21,10 +21,10 @@ exports.submitCase = (req, res) => {
       var CaseTransaction = new Casetransaction({
         "_id": caseTransactionId,
         "caseTransactionId": caseTransactionId,
-        "UserId": cases.userId,
-        "CaseTypeId": cases.caseTypeId,
-        "SeverityTypeId": cases.severityTypeId,
-        "StatusId": 1
+        "userId": cases.userId,
+        "caseTypeId": cases.caseTypeId,
+        "severityTypeId": cases.severityTypeId,
+        "statusId": 1
       });
       CaseTransaction.save((err, result) => {
         if (err) {
