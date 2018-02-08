@@ -215,7 +215,7 @@ exports.signUp = (req, res) => {
             if (err) {
               res.status(403).send({
                 sucess: false,
-                Error: err
+                error: err
               });
             } else {
               global.jwtToken = jwt.sign({
