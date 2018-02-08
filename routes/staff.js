@@ -94,6 +94,16 @@ exports.staffHome = (req, res) => {
   try {
     Casetransaction.find({
       statusId: 1
+    }).populate('userId', {
+      _id: 0,
+      Name: 1
+    }).populate('severityTypeId', {
+      _id: 0,
+      Severity: 1,
+      SLA: 1
+    }).populate('caseTypeId', {
+      _id: 0,
+      caseType: 1
     }).exec((err, result) => {
       if (err) {
         res.status(403).send({
