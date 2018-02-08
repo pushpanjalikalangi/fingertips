@@ -3,7 +3,7 @@ var severitySchema = mongoose.Schema({
   _id: {
     type: Number
   },
-  SeverityTypeId: {
+  severityTypeId: {
     type: Number,
     required: true,
     unique: [true, "Severity Type Id should not be duplicate"]

@@ -10,7 +10,7 @@ var CaseAcceptance = require('../models/tblCaseAcceptedMapping');
 exports.searchCase = (req, res) => {
   if (req.body) {
     Casetransaction.findOne({
-        CaseTransactionId: req.body.id
+        caseTransactionId: req.body.id
       })
       .populate('UserId', {
         _id: 0,
@@ -18,7 +18,7 @@ exports.searchCase = (req, res) => {
       })
       .populate('CaseTypeId', {
         _id: 0,
-        CaseType: 1
+        caseType: 1
       })
       .populate('SeverityTypeId', {
         _id: 0,
@@ -29,7 +29,6 @@ exports.searchCase = (req, res) => {
         _id: 0,
         Status: 1
       }).exec((err, result) => {
-        console.log(result);
         if (err) {
           res.status(403).send({
             sucess: false,
@@ -42,12 +41,11 @@ exports.searchCase = (req, res) => {
           });
         } else {
           CaseAcceptance.findOne({
-            CaseTransactionId: req.body.id //it accepts only _id when we use populate()
+            caseTransactionId: req.body.id //it accepts only _id when we use populate()
           }, {
             _id: 0,
-            UserId: 1
+            userId: 1
           }).exec((err, doc) => {
-            console.log(doc);
             if (err) {
               res.status(403).send({
                 sucess: false,
@@ -57,7 +55,7 @@ exports.searchCase = (req, res) => {
               res.status(200).send({
                 sucess: true,
                 result: result,
-                Assignedstaff: "Not Assigned to any staff"
+                Assignedstaff: "Not Assigned to Any Staff"
               })
             } else {
               res.status(200).send({

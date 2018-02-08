@@ -13,18 +13,18 @@ exports.submitCase = (req, res) => {
       _id: -1
     }).limit(1).exec((err, result) => {
       if (result == null) {
-        var CaseTransactionId = 1;
+        var caseTransactionId = 1;
       } else {
-        var id = result.CaseTransactionId;
-        var CaseTransactionId = id + 1;
+        var id = result.caseTransactionId;
+        var caseTransactionId = id + 1;
       }
       var CaseTransaction = new Casetransaction({
-        "_id": CaseTransactionId,
-        "CaseTransactionId": CaseTransactionId,
-        "UserId": cases.UserId,
-        "CaseTypeId": cases.CaseTypeId,
-        "SeverityTypeId": cases.SeverityTypeId,
-        "StatusId": cases.StatusId
+        "_id": caseTransactionId,
+        "caseTransactionId": caseTransactionId,
+        "UserId": cases.userId,
+        "CaseTypeId": cases.caseTypeId,
+        "SeverityTypeId": cases.severityTypeId,
+        "StatusId": 1
       });
       CaseTransaction.save((err, result) => {
         if (err) {
@@ -43,7 +43,7 @@ exports.submitCase = (req, res) => {
   } else {
     res.status(400).send({
       sucess: false,
-      message: 'Invalid details'
+      message: 'Invalid Details'
     });
   }
 }

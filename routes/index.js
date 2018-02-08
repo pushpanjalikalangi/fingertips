@@ -11,13 +11,13 @@ module.exports = function(app) {
   });
   app.post('/signUp', users.signUp);
   app.post('/logIn', users.logIn);
-  app.get('/roles', users.roles);
+  app.get('/Roles', users.Roles);
   app.get('/severity', users.severity);
-  app.get('/severitys', users.severitys);
+  app.get('/severities', users.severities);
   app.get('/casetype', users.casetype);
   app.get('/cases', users.cases);
-  app.get('/casestatus', users.casestatus);
-  app.get('/casestatuses', users.casestatuses);
+  app.get('/caseStatuses', users.caseStatuses);
+  app.get('/caseStatus', users.caseStatus);
   app.post('/submitCase', user.submitCase);
   app.get('/staffHome', staff.staffHome);
   app.post('/caseAccept', staff.caseAccept);

@@ -3,32 +3,32 @@ var caseTransactionSchema = mongoose.Schema({
   _id: {
     type: Number
   },
-  CaseTransactionId: {
+  caseTransactionId: {
     type: Number,
     required: true,
     unique: [true, "Case Transaction Id should not be duplicate"]
   },
-  UserId: {
+  userId: {
     type: Number,
     required: true,
     ref: 'user'
   },
-  CaseTypeId: {
+  caseTypeId: {
     type: Number,
     required: true,
     ref: 'tblCaseType'
   },
-  SeverityTypeId: {
+  severityTypeId: {
     type: Number,
     required: true,
     ref: 'tblSeverityType'
   },
-  StatusId: {
+  statusId: {
     type: Number,
     required: true,
     ref: 'tblCaseStatus'
   },
-  CreatedTime: {
+  createdTime: {
     type: Date,
     required: true,
     default: function() {

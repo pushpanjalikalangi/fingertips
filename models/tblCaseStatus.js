@@ -3,7 +3,7 @@ var caseStatusSchema = mongoose.Schema({
   _id: {
     type: Number
   },
-  StatusId: {
+  statusId: {
     type: Number,
     required: true,
     unique: [true, "Case Type Id should not be duplicate"]
@@ -12,7 +12,7 @@ var caseStatusSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  StatusDescription: {
+  statusDescription: {
     type: String,
     required: true,
     trim: true

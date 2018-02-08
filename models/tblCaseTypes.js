@@ -3,12 +3,12 @@ var caseTypeSchema = mongoose.Schema({
   _id: {
     type: Number
   },
-  CaseTypeId: {
+  caseTypeId: {
     type: Number,
     required: true,
     unique: [true, "Case Type Id should not be duplicate"]
   },
-  CaseType: {
+  caseType: {
     type: String,
     required: true,
     trim: true

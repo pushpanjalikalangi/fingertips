@@ -11,10 +11,10 @@ exports.caseAccept = (req, res) => {
   if (req.body) {
     var caseAcceptance = req.body;
     Casetransaction.findOneAndUpdate({
-      CaseTransactionId: caseAcceptance.CaseTransactionId
+      caseTransactionId: caseAcceptance.caseTransactionId
     }, {
       $set: {
-        StatusId: 2
+        statusId: 2
       }
     }).exec((err, Case) => {
       if (err) {
@@ -27,16 +27,16 @@ exports.caseAccept = (req, res) => {
           _id: -1
         }).limit(1).exec((err, result) => {
           if (result == null) {
-            var CaseAcceptedId = 1;
+            var caseAcceptedId = 1;
           } else {
-            var id = result.CaseAcceptedId;
-            var CaseAcceptedId = id + 1;
+            var id = result.caseAcceptedId;
+            var caseAcceptedId = id + 1;
           }
           var caseAccept = new CaseAcceptance({
-            _id: CaseAcceptedId,
-            CaseAcceptedId: CaseAcceptedId,
-            CaseTransactionId: caseAcceptance.CaseTransactionId,
-            UserId: caseAcceptance.UserId
+            _id: caseAcceptedId,
+            caseAcceptedId: caseAcceptedId,
+            caseTransactionId: caseAcceptance.caseTransactionId,
+            userId: caseAcceptance.userId
           });
           caseAccept.save((err, result) => {
             if (err) {
@@ -47,7 +47,7 @@ exports.caseAccept = (req, res) => {
             } else {
               res.status(200).send({
                 sucess: true,
-                message: 'Case Accepted Sucessfully and Changed the status'
+                message: 'Case Accepted Sucessfully and Changed the Status'
               })
             }
           })
@@ -65,10 +65,10 @@ exports.caseResolve = (req, res) => {
   if (req.body) {
     var caseresolve = req.body;
     Casetransaction.findOneAndUpdate({
-      CaseTransactionId: caseresolve.CaseTransactionId
+      caseTransactionId: caseresolve.caseTransactionId
     }, {
       $set: {
-        StatusId: 3
+        statusId: 3
       }
     }).exec((err, Case) => {
       if (err) {
@@ -79,7 +79,7 @@ exports.caseResolve = (req, res) => {
       } else {
         res.status(200).send({
           sucess: true,
-          message: 'Status is updated'
+          message: 'Status is Updated'
         });
       }
     });
@@ -93,12 +93,12 @@ exports.caseResolve = (req, res) => {
 exports.staffHome = (req, res) => {
   try {
     Casetransaction.find({
-      StatusId: 1
+      statusId: 1
     }).exec((err, result) => {
       if (err) {
         res.status(403).send({
           sucess: false,
-          message: 'Error in fetching the details',
+          message: 'Error in Fetching the Details',
           Error: err
         });
       } else if (result.length == 0) {
@@ -116,7 +116,7 @@ exports.staffHome = (req, res) => {
   } catch (e) {
     res.status(400).send({
       sucess: false,
-      message: 'Internal server'
+      message: 'Internal Server Error'
     });
   }
 }

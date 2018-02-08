@@ -11,19 +11,20 @@ var Casestatus = require('../models/tblCaseStatus');
 var Casetransaction = require('../models/tblCaseTransaction');
 var config = require('../config');
 
-exports.roles = (req, res) => {
+exports.Roles = (req, res) => {
   var role = new Role({
-    RoleId: 3,
+    roleId: 3,
     _id: 3,
-    Role: "manager"
+    Role: "Staff"
   })
   role.save(function(result) {
+    console.log(result);
     res.send("Role inserted");
   })
 }
-exports.severitys = (req, res) => {
+exports.severities = (req, res) => {
   var severity = new Severity({
-    SeverityTypeId: 4,
+    severityTypeId: 4,
     _id: 4,
     Severity: "Severity4",
     SLA: 360
@@ -35,7 +36,7 @@ exports.severitys = (req, res) => {
 exports.severity = (req, res) => {
   Severity.find({}, {
     // _id: 0,
-    SeverityTypeId: 1,
+    severityTypeId: 1,
     Severity: 1,
     SLA: 1
   }).exec((err, severitys) => {
@@ -54,9 +55,9 @@ exports.severity = (req, res) => {
 }
 exports.cases = (req, res) => {
   var casetype = new Casetype({
-    CaseTypeId: 3,
+    caseTypeId: 3,
     _id: 3,
-    CaseType: "Need a Carpenter",
+    caseType: "Need a Carpenter",
   })
   casetype.save(function(err, result) {
     console.log(err);
@@ -67,8 +68,8 @@ exports.cases = (req, res) => {
 exports.casetype = (req, res) => {
   Casetype.find({}, {
     // _id: 0,
-    CaseTypeId: 1,
-    CaseType: 1
+    caseTypeId: 1,
+    caseType: 1
   }).exec((err, casetypes) => {
     if (err) {
       res.status(403).send({
@@ -83,23 +84,23 @@ exports.casetype = (req, res) => {
     }
   })
 }
-exports.casestatuses = (req, res) => {
+exports.caseStatuses = (req, res) => {
   var casestatus = new Casestatus({
-    StatusId: 3,
+    statusId: 3,
     _id: 3,
     Status: "RESOLVED",
-    StatusDescription: "when a STAFF closes a case"
+    statusDescription: "when a STAFF closes a case"
   })
   casestatus.save(function(result) {
     res.send("Casestatus inserted");
   });
 }
-exports.casestatus = (req, res) => {
+exports.caseStatus = (req, res) => {
   Casestatus.find({}, {
     // _id: 0,
-    StatusId: 1,
+    statusId: 1,
     Status: 1,
-    StatusDescription: 1
+    statusDescription: 1
   }).exec((err, casestatuses) => {
     if (err) {
       res.status(403).send({
@@ -135,7 +136,7 @@ exports.logIn = (req, res) => {
       } else {
         var hash = user.password;
         Role.findOne({
-          RoleId: user.RoleId
+          roleId: user.roleId
         }).exec((err, role) => {
           if (role) {
             if (bcrypt.compareSync(users.password, hash)) {
@@ -147,7 +148,9 @@ exports.logIn = (req, res) => {
               res.status(200).send({
                 sucess: true,
                 token: jwtToken,
-                Role: role.Role
+                Role: role.Role,
+                Name: user.Name,
+                userId: user.userId
               })
             } else {
               res.status(403).send({
@@ -158,7 +161,7 @@ exports.logIn = (req, res) => {
           } else {
             res.status(403).send({
               sucess: false,
-              message: 'Unable to find the role'
+              message: 'Unable to find the Role'
             });
           }
         })
@@ -180,7 +183,7 @@ exports.signUp = (req, res) => {
       if (err) {
         res.status(403).send({
           sucess: false,
-          message: 'Error in fetching the details',
+          message: 'Error in Fetching the Details',
           Error: err
         });
       } else if (user) {
@@ -194,19 +197,19 @@ exports.signUp = (req, res) => {
           _id: -1
         }).limit(1).exec((err, result) => {
           if (result == null) {
-            var UserId = 1;
+            var userId = 1;
           } else {
-            var id = result.UserId;
-            var UserId = id + 1;
+            var id = result.userId;
+            var userId = id + 1;
           }
           var newUser = new User({
-            "_id": UserId,
-            "UserId": UserId,
+            "_id": userId,
+            "userId": userId,
             "Name": users.Name,
             "password": hash, // use the generateHash function in
-            "RoleId": users.RoleId,
-            "MobileNumber": users.MobileNumber,
-            "EmailId": users.EmailId
+            "roleId": users.roleId,
+            "mobileNumber": users.mobileNumber,
+            "emailId": users.emailId
           });
           newUser.save(function(err) {
             if (err) {

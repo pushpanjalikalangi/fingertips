@@ -3,7 +3,7 @@ var roleSchema = mongoose.Schema({
   _id: {
     type: Number
   },
-  RoleId: {
+  roleId: {
     type: Number,
     required: true,
     unique: [true, "Role Id should not be duplicate"]

@@ -3,22 +3,22 @@ var caseAcceptedMapping = mongoose.Schema({
   _id: {
     type: Number
   },
-  CaseAcceptedId: {
+  caseAcceptedId: {
     type: Number,
     required: true,
     unique: [true, "Case Acceptance Id should not be duplicate"]
   },
-  UserId: {
+  userId: {
     type: Number,
     required: true,
     ref: 'user'
   },
-  CaseTransactionId: {
+  caseTransactionId: {
     type: Number,
     required: true,
     ref: 'tblCaseTransaction'
   },
-  CreatedTime: {
+  createdTime: {
     type: Date,
     required: true,
     default: function() {

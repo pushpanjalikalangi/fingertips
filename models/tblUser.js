@@ -3,12 +3,12 @@ var userSchema = mongoose.Schema({
   _id: {
     type: Number
   },
-  UserId: {
+  userId: {
     type: Number,
     required: [true, 'User Id is Required'],
     unique: [true, 'User Id must be unique']
   },
-  RoleId: {
+  roleId: {
     type: Number,
     required: [true, 'User Name is Required']
   },
@@ -22,21 +22,21 @@ var userSchema = mongoose.Schema({
     type: String,
     required: [true, 'Password is Required']
   },
-  MobileNumber: {
+  mobileNumber: {
     type: String,
     required: [true, 'MobileNumber is Required']
   },
-  EmailId: {
+  emailId: {
     type: String,
     required: [true, 'EmailId is Required']
   },
-  IsActive: {
+  isActive: {
     type: Boolean,
     required: [true, 'Activity status is Required'],
     trim: true,
     default: true
   },
-  CreatedTime: {
+  createdTime: {
     type: Date,
     required: true,
     default: function() {
