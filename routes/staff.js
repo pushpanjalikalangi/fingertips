@@ -104,6 +104,10 @@ exports.staffHome = (req, res) => {
     }).populate('caseTypeId', {
       _id: 0,
       caseType: 1
+    }).populate('statusId', {
+      _id: 0,
+      statusId: 1,
+      Status: 1
     }).exec((err, result) => {
       if (err) {
         res.status(403).send({
@@ -144,6 +148,10 @@ exports.acceptCases = (req, res) => {
     }).populate('caseTypeId', {
       _id: 0,
       caseType: 1
+    }).populate('statusId', {
+      _id: 0,
+      statusId: 1,
+      Status: 1
     }).exec((err, result) => {
       if (err) {
         res.status(403).send({
@@ -154,7 +162,7 @@ exports.acceptCases = (req, res) => {
       } else if (result.length == 0) {
         res.status(200).send({
           sucess: false,
-          message: 'No Active Cases are Present',
+          message: 'No Accepted Cases are Present',
         });
       } else {
         res.status(200).send({
