@@ -20,6 +20,7 @@ module.exports = function(app) {
   app.get('/caseStatus', users.caseStatus);
   app.post('/submitCase', user.submitCase);
   app.get('/staffHome', staff.staffHome);
+  app.get('/acceptCases', staff.acceptCases);
   app.post('/caseAccept', staff.caseAccept);
   app.post('/caseResolve', staff.caseResolve);
   app.post('/searchCase', manager.searchCase);
