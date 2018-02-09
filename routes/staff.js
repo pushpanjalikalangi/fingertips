@@ -180,14 +180,8 @@ exports.acceptCases = (req, res) => {
 }
 exports.home = (req, res) => {
   try {
-    Casetransaction.find({
-      // $or: [{
-      //     statusId: 2
-      //   },
-      //   {
-      //     statusId: 1
-      //   }
-      // ]
+    Casetransaction.find({}).sort({
+      _id: -1
     }).populate('userId', {
       _id: 0,
       Name: 1
