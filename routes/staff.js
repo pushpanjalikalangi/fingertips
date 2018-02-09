@@ -189,8 +189,6 @@ exports.home = (req, res) => {
           statusId: 1
         }
       ]
-    }).sort({
-      updatedTime: 1
     }).populate('userId', {
       _id: 0,
       Name: 1
@@ -205,6 +203,8 @@ exports.home = (req, res) => {
       _id: 0,
       statusId: 1,
       Status: 1
+    }).sort({
+      updatedTime: 1
     }).exec((err, result) => {
       if (err) {
         res.status(403).send({

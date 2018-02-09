@@ -12,20 +12,21 @@ exports.searchCase = (req, res) => {
     Casetransaction.findOne({
         caseTransactionId: req.body.id
       })
-      .populate('UserId', {
+      .populate('userId', {
         _id: 0,
         Name: 1
       })
-      .populate('CaseTypeId', {
+      .populate('caseTypeId', {
         _id: 0,
+        caseType: 1,
         caseType: 1
       })
-      .populate('SeverityTypeId', {
+      .populate('severityTypeId', {
         _id: 0,
         Severity: 1,
         SLA: 1
       })
-      .populate('StatusId', {
+      .populate('statusId', {
         _id: 0,
         Status: 1
       }).exec((err, result) => {
@@ -35,36 +36,42 @@ exports.searchCase = (req, res) => {
             Error: err
           });
         } else if (result == null) {
-          res.status(403).send({
-            sucess: false,
+          res.status(200).send({
+            sucess: true,
             message: "Case is not Registered with that Id"
           });
         } else {
           CaseAcceptance.findOne({
-            caseTransactionId: req.body.id //it accepts only _id when we use populate()
-          }, {
-            _id: 0,
-            userId: 1
-          }).exec((err, doc) => {
-            if (err) {
-              res.status(403).send({
-                sucess: false,
-                Error: err
-              });
-            } else if (doc == null) {
-              res.status(200).send({
-                sucess: true,
-                result: result,
-                Assignedstaff: "Not Assigned to Any Staff"
-              })
-            } else {
-              res.status(200).send({
-                sucess: true,
-                result: result,
-                Assignedstaff: doc
-              })
-            }
-          })
+              caseTransactionId: req.body.id //it accepts only _id when we use populate()
+            }, {
+              createdTime: 0,
+              _id: 0,
+              caseAcceptedId: 0,
+              caseTransactionId: 0
+            })
+            .populate('userId', {
+              _id: 0,
+              Name: 1
+            }).exec((err, doc) => {
+              if (err) {
+                res.status(403).send({
+                  sucess: false,
+                  Error: err
+                });
+              } else if (doc == null) {
+                res.status(200).send({
+                  sucess: true,
+                  result: result,
+                  Assignedstaff: "Not Assigned to Any Staff"
+                })
+              } else {
+                res.status(200).send({
+                  sucess: true,
+                  result: result,
+                  Assignedstaff: doc
+                })
+              }
+            })
         }
       })
   } else {

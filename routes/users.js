@@ -153,8 +153,8 @@ exports.logIn = (req, res) => {
                 userId: user.userId
               })
             } else {
-              res.status(403).send({
-                sucess: false,
+              res.status(200).send({
+                sucess: true,
                 message: 'Incorrect Name or password'
               });
             }
@@ -187,8 +187,8 @@ exports.signUp = (req, res) => {
           Error: err
         });
       } else if (user) {
-        res.status(403).send({
-          sucess: false,
+        res.status(200).send({
+          sucess: true,
           message: 'User is Already Registered',
         });
       } else {
