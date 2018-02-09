@@ -14,7 +14,8 @@ exports.caseAccept = (req, res) => {
       caseTransactionId: caseAcceptance.caseTransactionId
     }, {
       $set: {
-        statusId: 2
+        statusId: 2,
+        updatedTime: new Date()
       }
     }).exec((err, Case) => {
       if (err) {
@@ -180,8 +181,16 @@ exports.acceptCases = (req, res) => {
 }
 exports.home = (req, res) => {
   try {
-    Casetransaction.find({}).sort({
-      _id: -1
+    Casetransaction.find({
+      $or: [{
+          statusId: 2
+        },
+        {
+          statusId: 1
+        }
+      ]
+    }).sort({
+      updatedTime: 1
     }).populate('userId', {
       _id: 0,
       Name: 1

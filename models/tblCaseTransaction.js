@@ -34,6 +34,13 @@ var caseTransactionSchema = mongoose.Schema({
     default: function() {
       return new Date();
     }
+  },
+  updatedTime: {
+    type: Date,
+    required: true,
+    default: function() {
+      return new Date();
+    }
   }
 });
 module.exports = mongoose.model('tblCaseTransaction', caseTransactionSchema);
