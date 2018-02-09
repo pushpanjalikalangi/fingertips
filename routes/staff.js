@@ -178,3 +178,53 @@ exports.acceptCases = (req, res) => {
     });
   }
 }
+exports.home = (req, res) => {
+  try {
+    Casetransaction.find({
+      // $or: [{
+      //     statusId: 2
+      //   },
+      //   {
+      //     statusId: 1
+      //   }
+      // ]
+    }).populate('userId', {
+      _id: 0,
+      Name: 1
+    }).populate('severityTypeId', {
+      _id: 0,
+      Severity: 1,
+      SLA: 1
+    }).populate('caseTypeId', {
+      _id: 0,
+      caseType: 1
+    }).populate('statusId', {
+      _id: 0,
+      statusId: 1,
+      Status: 1
+    }).exec((err, result) => {
+      if (err) {
+        res.status(403).send({
+          sucess: false,
+          message: 'Error in Fetching the Details',
+          Error: err
+        });
+      } else if (result.length == 0) {
+        res.status(200).send({
+          sucess: false,
+          message: 'No Cases are Present',
+        });
+      } else {
+        res.status(200).send({
+          sucess: true,
+          cases: result
+        })
+      }
+    })
+  } catch (e) {
+    res.status(400).send({
+      sucess: false,
+      message: 'Internal Server Error'
+    });
+  }
+}
