@@ -36,8 +36,8 @@ exports.searchCase = (req, res) => {
             Error: err
           });
         } else if (result == null) {
-          res.status(200).send({
-            sucess: true,
+          res.status(403).send({
+            sucess: false,
             message: "Case is not Registered with that Id"
           });
         } else {
