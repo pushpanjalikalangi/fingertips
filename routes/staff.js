@@ -161,7 +161,7 @@ exports.acceptCases = (req, res) => {
           Error: err
         });
       } else if (result.length == 0) {
-        res.status(200).send({
+        res.status(403).send({
           sucess: false,
           message: 'No Accepted Cases are Present',
         });
