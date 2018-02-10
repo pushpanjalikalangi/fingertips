@@ -25,4 +25,5 @@ module.exports = function(app) {
   app.post('/caseAccept', staff.caseAccept);
   app.post('/caseResolve', staff.caseResolve);
   app.post('/searchCase', manager.searchCase);
+  // app.post('/pushNotification', users.pushNotification);
 };

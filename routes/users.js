@@ -10,6 +10,7 @@ var Casetype = require('../models/tblCaseTypes');
 var Casestatus = require('../models/tblCaseStatus');
 var Casetransaction = require('../models/tblCaseTransaction');
 var config = require('../config');
+var FCM = require('fcm-push');
 
 exports.Roles = (req, res) => {
   var role = new Role({
@@ -150,7 +151,8 @@ exports.logIn = (req, res) => {
                 token: jwtToken,
                 Role: role.Role,
                 Name: user.Name,
-                userId: user.userId
+                userId: user.userId,
+                deviceToken: user.deviceToken
               })
             } else {
               res.status(403).send({
@@ -239,3 +241,52 @@ exports.signUp = (req, res) => {
     })
   }
 }
+
+// exports.pushNotification = function(req, res) {
+//   if (req.body.Name) {
+//     User.findOne({
+//       Name: req.body.Name
+//     }, function(err, result) {
+//       if (result) {
+//         console.log(result);
+//         // var regId = [];
+//         // var a = result.user_details.apps
+//         // console.log(a);
+//         // a.forEach(function(entry) {
+//         //   regId.push(entry.reg_id);
+//         // })
+//         var fcm = new FCM(config.serverKey);
+//
+//         var message = {
+//           registration_ids: [result.deviceToken],
+//           // to: regId, // required fill with device token or topics
+//           collapse_key: 'your_collapse_key',
+//           data: {
+//             your_custom_data_key: 'your_custom_data_value'
+//           },
+//           notification: {
+//             title: 'taGd',
+//             body: "Hello, " + result.Name
+//           }
+//         };
+//         //callback style
+//         fcm.send(message, function(err, response) {
+//           if (err) {
+//             console.log("Something has gone wrong!");
+//             console.log(err);
+//             res.send(err)
+//           } else {
+//             console.log("Successfully sent with response: ", response);
+//             res.send(response)
+//           }
+//         });
+//       }
+//     })
+//   } else {
+//     res.status(403)
+//       .send({
+//         success: false,
+//         message: "Invalid details"
+//       });
+//   }
+// }

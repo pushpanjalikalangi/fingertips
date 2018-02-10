@@ -18,7 +18,6 @@ exports.searchCase = (req, res) => {
       })
       .populate('caseTypeId', {
         _id: 0,
-        caseType: 1,
         caseType: 1
       })
       .populate('severityTypeId', {

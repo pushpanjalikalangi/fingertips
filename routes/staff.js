@@ -6,6 +6,8 @@ var Casetype = require('../models/tblCaseTypes');
 var Casestatus = require('../models/tblCaseStatus');
 var Casetransaction = require('../models/tblCaseTransaction');
 var CaseAcceptance = require('../models/tblCaseAcceptedMapping');
+var config = require('../config');
+var FCM = require('fcm-push');
 
 exports.caseAccept = (req, res) => {
   if (req.body) {
@@ -46,9 +48,73 @@ exports.caseAccept = (req, res) => {
                 Error: err
               })
             } else {
-              res.status(200).send({
-                sucess: true,
-                message: 'Case Accepted Sucessfully and Changed the Status'
+              CaseAcceptance.findOne({
+                caseAcceptedId: caseAcceptedId
+              }).populate('userId', {
+                _id: 0,
+                Name: 1
+              }).exec((err, r) => {
+                if (err) {
+                  res.status(403).send({
+                    sucess: false,
+                    Error: err
+                  })
+                } else {
+                  Casetransaction.findOne({
+                      caseTransactionId: caseAcceptance.caseTransactionId
+                    }).populate('userId', {
+                      _id: 0,
+                      Name: 1,
+                      deviceToken: 1
+                    })
+                    .populate('caseTypeId', {
+                      _id: 0,
+                      caseType: 1
+                    })
+                    .populate('severityTypeId', {
+                      _id: 0,
+                      Severity: 1,
+                      SLA: 1
+                    }).exec((err, re) => {
+                      if (err) {
+                        res.status(403).send({
+                          success: false,
+                          Error: err
+                        });
+                      } else {
+                        var fcm = new FCM(config.serverKey);
+
+                        var message = {
+                          registration_ids: [re.userId.deviceToken],
+                          // to: regId, // required fill with device token or topics
+                          collapse_key: 'your_collapse_key',
+                          data: {
+                            your_custom_data_key: 'your_custom_data_value'
+                          },
+                          notification: {
+                            title: 'taGd',
+                            body: "Hi " + re.userId.Name + " Your ticket for " + re.caseTypeId.caseType + " is accepted by " + r.userId.Name + " and resolved within " + re.severityTypeId.SLA + "mins."
+                          }
+                        };
+                        //callback style
+                        fcm.send(message, function(err, response) {
+                          if (err) {
+                            console.log("Something has gone wrong!");
+                            console.log(err);
+                            res.send(err)
+                          } else {
+                            // console.log("Successfully sent with response: ", response);
+                            // res.send(response)
+                            res.status(200).send({
+                              sucess: true,
+                              message: 'Case Accepted Sucessfully and Changed the Status',
+                              notification: response
+                            })
+                          }
+                        });
+                      }
+                    })
+                }
               })
             }
           })
@@ -78,10 +144,65 @@ exports.caseResolve = (req, res) => {
           Error: err
         });
       } else {
-        res.status(200).send({
-          sucess: true,
-          message: 'Status is Updated'
-        });
+        Casetransaction.findOne({
+            caseTransactionId: caseresolve.caseTransactionId
+          }).populate('userId', {
+            _id: 0,
+            Name: 1,
+            deviceToken: 1
+          })
+          .populate('caseTypeId', {
+            _id: 0,
+            caseType: 1
+          })
+          .populate('severityTypeId', {
+            _id: 0,
+            Severity: 1,
+            SLA: 1
+          })
+          .populate('statusId', {
+            _id: 0,
+            Status: 1
+          }).exec((err, result) => {
+            if (err) {
+              res.status(403).send({
+                success: false,
+                Error: err
+              })
+            } else {
+              console.log(result);
+              var fcm = new FCM(config.serverKey);
+
+              var message = {
+                registration_ids: [result.userId.deviceToken],
+                // to: regId, // required fill with device token or topics
+                collapse_key: 'your_collapse_key',
+                data: {
+                  your_custom_data_key: 'your_custom_data_value'
+                },
+                notification: {
+                  title: 'taGd',
+                  body: "Hi " + result.userId.Name + " Your ticket for " + result.caseTypeId.caseType + " is resolved."
+                }
+              };
+              //callback style
+              fcm.send(message, function(err, response) {
+                if (err) {
+                  console.log("Something has gone wrong!");
+                  console.log(err);
+                  res.send(err)
+                } else {
+                  // console.log("Successfully sent with response: ", response);
+                  // res.send(response)
+                  res.status(200).send({
+                    sucess: true,
+                    message: 'Status is Updated',
+                    notification: response
+                  });
+                }
+              });
+            }
+          })
       }
     });
   } else {

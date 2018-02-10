@@ -12,6 +12,9 @@ var userSchema = mongoose.Schema({
     type: Number,
     required: [true, 'User Name is Required']
   },
+  deviceToken: {
+    type: String,
+  },
   Name: {
     type: String,
     required: [true, 'User Name is Required'],
