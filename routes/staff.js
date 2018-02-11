@@ -101,7 +101,10 @@ exports.caseAccept = (req, res) => {
                           if (err) {
                             console.log("Something has gone wrong!");
                             console.log(err);
-                            res.send(err)
+                            res.status(403).send({
+                              sucess: false,
+                              Error: err
+                            })
                           } else {
                             // console.log("Successfully sent with response: ", response);
                             // res.send(response)
@@ -190,7 +193,10 @@ exports.caseResolve = (req, res) => {
                 if (err) {
                   console.log("Something has gone wrong!");
                   console.log(err);
-                  res.send(err)
+                  res.status(403).send({
+                    sucess: false,
+                    Error: err
+                  })
                 } else {
                   // console.log("Successfully sent with response: ", response);
                   // res.send(response)

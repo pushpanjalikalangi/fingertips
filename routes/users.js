@@ -151,8 +151,7 @@ exports.logIn = (req, res) => {
                 token: jwtToken,
                 Role: role.Role,
                 Name: user.Name,
-                userId: user.userId,
-                deviceToken: user.deviceToken
+                userId: user.userId
               })
             } else {
               res.status(403).send({
@@ -211,7 +210,8 @@ exports.signUp = (req, res) => {
             "password": hash, // use the generateHash function in
             "roleId": users.roleId,
             "mobileNumber": users.mobileNumber,
-            "emailId": users.emailId
+            "emailId": users.emailId,
+            "deviceToken": user.deviceToken
           });
           newUser.save(function(err) {
             if (err) {
