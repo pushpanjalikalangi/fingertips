@@ -147,13 +147,38 @@ exports.logIn = (req, res) => {
               }, config.jwtsecret, {
                 expiresIn: "365d" // expires in 365d
               });
-              res.status(200).send({
-                sucess: true,
-                token: jwtToken,
-                Role: role.Role,
-                Name: user.Name,
-                userId: user.userId
-              })
+              if (user.deviceToken != users.deviceToken) {
+                User.findOneAndUpdate({
+                  Name: users.Name
+                }, {
+                  $set: {
+                    deviceToken: users.deviceToken
+                  }
+                }).exec((err, result) => {
+                  if (err) {
+                    res.status(403).send({
+                      sucess: false,
+                      Error: err
+                    })
+                  } else {
+                    res.status(200).send({
+                      sucess: true,
+                      token: jwtToken,
+                      Role: role.Role,
+                      Name: user.Name,
+                      userId: user.userId
+                    })
+                  }
+                })
+              } else {
+                res.status(200).send({
+                  sucess: true,
+                  token: jwtToken,
+                  Role: role.Role,
+                  Name: user.Name,
+                  userId: user.userId
+                })
+              }
             } else {
               res.status(403).send({
                 sucess: false,
@@ -256,7 +281,7 @@ exports.saveNotification = (req, res) => {
       var notification = new Notification({
         _id: notificationId,
         notificationId: notificationId,
-        userId: req.body.userId
+        userId: req.body.userId,
         notification: req.body.notification
       });
       notification.save((err, result) => {
