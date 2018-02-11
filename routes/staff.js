@@ -93,7 +93,7 @@ exports.caseAccept = (req, res) => {
                           },
                           notification: {
                             title: 'taGd',
-                            body: "Hi " + re.userId.Name + " Your ticket for " + re.caseTypeId.caseType + " is accepted by " + r.userId.Name + " and resolved within " + re.severityTypeId.SLA + "mins."
+                            body: "Hi " + re.userId.Name + " Your ticket for " + re.caseTypeId.caseType + " is accepted by " + r.userId.Name + " and resolved within " + re.severityTypeId.SLA + "hrs."
                           }
                         };
                         //callback style
