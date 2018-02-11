@@ -16,6 +16,7 @@ module.exports = function(app) {
   app.get('/severities', users.severities);
   app.get('/casetype', users.casetype);
   app.get('/cases', users.cases);
+  app.post('/saveNotification', users.saveNotification);
   app.get('/caseStatuses', users.caseStatuses);
   app.get('/caseStatus', users.caseStatus);
   app.post('/submitCase', user.submitCase);
