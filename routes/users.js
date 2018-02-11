@@ -211,7 +211,7 @@ exports.signUp = (req, res) => {
             "roleId": users.roleId,
             "mobileNumber": users.mobileNumber,
             "emailId": users.emailId,
-            "deviceToken": user.deviceToken
+            "deviceToken": users.deviceToken
           });
           newUser.save(function(err) {
             if (err) {
