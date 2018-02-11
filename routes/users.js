@@ -9,6 +9,7 @@ var Severity = require('../models/tblSeverityTypes');
 var Casetype = require('../models/tblCaseTypes');
 var Casestatus = require('../models/tblCaseStatus');
 var Casetransaction = require('../models/tblCaseTransaction');
+var Notification = require('../models/tblNotifications');
 var config = require('../config');
 var FCM = require('fcm-push');
 
@@ -241,52 +242,41 @@ exports.signUp = (req, res) => {
     })
   }
 }
-
-// exports.pushNotification = function(req, res) {
-//   if (req.body.Name) {
-//     User.findOne({
-//       Name: req.body.Name
-//     }, function(err, result) {
-//       if (result) {
-//         console.log(result);
-//         // var regId = [];
-//         // var a = result.user_details.apps
-//         // console.log(a);
-//         // a.forEach(function(entry) {
-//         //   regId.push(entry.reg_id);
-//         // })
-//         var fcm = new FCM(config.serverKey);
-//
-//         var message = {
-//           registration_ids: [result.deviceToken],
-//           // to: regId, // required fill with device token or topics
-//           collapse_key: 'your_collapse_key',
-//           data: {
-//             your_custom_data_key: 'your_custom_data_value'
-//           },
-//           notification: {
-//             title: 'taGd',
-//             body: "Hello, " + result.Name
-//           }
-//         };
-//         //callback style
-//         fcm.send(message, function(err, response) {
-//           if (err) {
-//             console.log("Something has gone wrong!");
-//             console.log(err);
-//             res.send(err)
-//           } else {
-//             console.log("Successfully sent with response: ", response);
-//             res.send(response)
-//           }
-//         });
-//       }
-//     })
-//   } else {
-//     res.status(403)
-//       .send({
-//         success: false,
-//         message: "Invalid details"
-//       });
-//   }
-// }
+exports.saveNotification = (req, res) => {
+  if (req.body) {
+    Notification.findOne().sort({
+      _id: -1
+    }).limit(1).exec((err, result) => {
+      if (result == null) {
+        var notificationId = 1;
+      } else {
+        var id = result.notificationId;
+        var notificationId = id + 1;
+      }
+      var notification = new Notification({
+        _id: notificationId,
+        notificationId: notificationId,
+        userId: req.body.userId
+        notification: req.body.notification
+      });
+      notification.save((err, result) => {
+        if (err) {
+          res.status(403).send({
+            sucess: false,
+            Error: err
+          })
+        } else {
+          res.status(200).send({
+            sucess: true,
+            message: 'Notification is saved'
+          })
+        }
+      })
+    })
+  } else {
+    res.status(403).send({
+      sucess: false,
+      Message: 'Invalid Details'
+    })
+  }
+}
