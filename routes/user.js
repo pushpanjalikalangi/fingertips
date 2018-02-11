@@ -74,7 +74,7 @@ exports.submitCase = (req, res) => {
                   },
                   notification: {
                     title: 'taGd',
-                    body: "Hi " + result.userId.Name + " Your ticket for " + result.caseTypeId.caseType + " is registered Successfully."
+                    body: "Hi " + result.userId.Name + ", Your ticket for " + result.caseTypeId.caseType + " is registered Successfully."
                   }
                 };
                 //callback style
