@@ -73,7 +73,7 @@ exports.submitCase = (req, res) => {
                     your_custom_data_key: 'your_custom_data_value'
                   },
                   notification: {
-                    title: 'taGd',
+                    title: 'Finger Tips',
                     body: "Hi " + result.userId.Name + ", Your ticket for " + result.caseTypeId.caseType + " is registered Successfully."
                   }
                 };

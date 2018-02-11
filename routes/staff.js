@@ -92,7 +92,7 @@ exports.caseAccept = (req, res) => {
                             your_custom_data_key: 'your_custom_data_value'
                           },
                           notification: {
-                            title: 'taGd',
+                            title: 'Finger Tips',
                             body: "Hi " + re.userId.Name + ", Your ticket for " + re.caseTypeId.caseType + " is accepted by " + r.userId.Name + " and resolved within " + re.severityTypeId.SLA + "hrs."
                           }
                         };
@@ -184,7 +184,7 @@ exports.caseResolve = (req, res) => {
                   your_custom_data_key: 'your_custom_data_value'
                 },
                 notification: {
-                  title: 'taGd',
+                  title: 'Finger Tips',
                   body: "Hi " + result.userId.Name + ", Your ticket for " + result.caseTypeId.caseType + " is resolved."
                 }
               };
